@@ -1,0 +1,244 @@
+* {
+    padding: 0;
+    margin: 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #2980b9;
+}
+
+nav {
+    width: 100%;
+    height: 10vh;
+    align-self: flex-start;
+    background: #2980b9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: fixed
+}
+
+nav .ct {
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: visible;
+}
+
+nav .bt {
+    width: 10%;
+    height: auto;
+    overflow: visible;
+}
+
+nav .search {
+    width: 80%;
+}
+
+nav .search input {
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: 100%;
+    height: 2.5em;
+    padding: 0 1%;
+}
+
+nav .bt label#search {
+    background: #34495e;
+    color: white;
+    padding: .5px;
+    height: 2em;
+    width: 50%;
+    margin-left: 0;
+    display: flex;
+    border-radius: 0 5px 5px 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 0px 0px #2c3e50;
+    cursor: pointer;
+    transition: .5s;
+}
+
+nav .bt label#search:hover {
+    box-shadow: -5px 0 0;
+    transition: .5s;
+}
+
+.cntNT {
+    width: 70%;
+    height: auto;
+    margin-top: 11.5vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.cntNT .note {
+    width: 47%;
+    height: auto;
+    background: whitesmoke;
+    align-self: flex-start;
+    border-radius: 10px;
+    padding: .7em;
+}
+
+.cntNT .note .title {
+    width: 99%;
+    text-align: left;
+    padding: .9em 0;
+}
+
+.cntNT .cnt {
+    width: 95%;
+    text-align: justify;
+}
+
+.cntNT .opcs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    margin-top: 1em;
+}
+
+.cntNT .opcs label {
+    cursor: pointer;
+    color: white;
+}
+
+.cntNT .opcs #update,
+.cntNT .opcs #del {
+    margin-left: 0;
+    background: #2980b9;
+    padding: .3em .5em;
+    border-radius: 5px;
+}
+
+.cntNT .opcs #del {
+    margin-right: 0;
+    background: #e74c3c;
+}
+
+.add {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #2c3e50;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    align-self: flex-end;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.add:hover {
+    transition: .5s;
+    box-shadow: 0 0 0;
+}
+
+.add .bt {
+    width: 25px;
+    height: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    transition: 1s;
+}
+
+.btds {
+    width: 100%;
+    height: 5px;
+    background: white;
+    border-radius: 5px;
+}
+
+.btds.b {
+    transform: rotateZ(90deg);
+    transform-origin: center;
+    position: absolute;
+    width: 25px;
+}
+
+.add .bt:hover {
+    transform-origin: center;
+    transform: rotateZ(45deg);
+}
+
+.notecreate {
+    width: 40%;
+    height: 50vh;
+    background: #2980b9;
+    position: absolute;
+    margin-left: 0;
+    border-radius: 0 5px 0 0;
+    /*align-self: flex-end;*/
+    margin-top: 50vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.notecreate .tt,
+.notecreate .txt {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.notecreate .tt input,
+.notecreate .txt textarea,
+.notecreate .bts {
+    width: 95%;
+    height: auto;
+    border-radius: 5px;
+    border: none;
+    padding: 1em;
+}
+
+.notecreate .txt textarea {
+    width: 90%;
+}
+
+.notecreate .bts {
+    width: auto;
+    margin-right: 5px;
+}
+
+.notecreate .bts label {
+    color: white;
+    cursor: pointer;
+    margin-right: 0;
+    padding: .5em;
+    background: #2c3e50;
+    border-radius: 5px;
+}
