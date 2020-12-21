@@ -15,7 +15,7 @@
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -41,17 +41,23 @@ nav .ct {
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    overflow: visible;
 }
 
 nav .bt {
     width: 10%;
     height: auto;
-    overflow: visible;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 nav .search {
-    width: 80%;
+    width: 70%;
+}
+
+nav label#bin {
+    color: white;
+    cursor: pointer;
 }
 
 nav .search input {
@@ -92,6 +98,7 @@ nav .bt label#search:hover {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    padding: 2em 0;
 }
 
 .cntNT .note {
@@ -101,9 +108,10 @@ nav .bt label#search:hover {
     align-self: flex-start;
     border-radius: 10px;
     padding: .7em;
+    margin-bottom: 2em;
 }
 
-.cntNT .note .title {
+.cntNT .note .title-nt {
     width: 99%;
     text-align: left;
     padding: .9em 0;
@@ -128,15 +136,15 @@ nav .bt label#search:hover {
     color: white;
 }
 
-.cntNT .opcs #update,
-.cntNT .opcs #del {
+.cntNT .opcs .update,
+.cntNT .opcs .del {
     margin-left: 0;
     background: #2980b9;
     padding: .3em .5em;
     border-radius: 5px;
 }
 
-.cntNT .opcs #del {
+.cntNT .opcs .del {
     margin-right: 0;
     background: #e74c3c;
 }
@@ -169,7 +177,6 @@ nav .bt label#search:hover {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    overflow: visible;
     transition: 1s;
 }
 
@@ -187,9 +194,76 @@ nav .bt label#search:hover {
     width: 25px;
 }
 
-.add .bt:hover {
+
+.hide-bt .bt {
     transform-origin: center;
     transform: rotateZ(45deg);
+}
+
+.bin {
+    width: 20vw;
+    height: 100vh;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    margin-left: 100vw;
+    /*80vw*/
+    overflow-y: scroll;
+    transition: .5s;
+}
+
+.bin-show {
+    margin-left: 80vw;
+}
+
+.bin .bt-close {
+    width: 100%;
+    padding: 5px;
+}
+
+.danger-lb {
+    color: #e74c3c;
+    opacity: .7;
+    cursor: pointer;
+}
+
+.safe-lb {
+    color: #2ecc71;
+    opacity: .7;
+    cursor: pointer;
+}
+
+.bin-cnt {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.bin-note {
+    width: 90%;
+    height: auto;
+    background: white;
+    margin: 10px 0;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bin-note .title {
+    font-weight: 550;
+}
+
+.bin-note .cnt-prev {
+    padding: 2px 0;
+}
+
+.bin-note .bts {
+    padding-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .notecreate {
@@ -200,12 +274,17 @@ nav .bt label#search:hover {
     margin-left: 0;
     border-radius: 0 5px 0 0;
     /*align-self: flex-end;*/
-    margin-top: 50vh;
+    margin-top: 100vh;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.2);
+    transition: .5s;
+}
+
+.notecreate-show {
+    margin-top: 50vh;
 }
 
 .notecreate .tt,
@@ -241,4 +320,33 @@ nav .bt label#search:hover {
     padding: .5em;
     background: #2c3e50;
     border-radius: 5px;
+}
+
+@media (min-width: 300px) and (max-width: 500px){
+    .notecreate {
+        width: 100vw;
+        height: 100vh;
+        margin-top: 100vh;
+    }
+
+    .notecreate-show {
+        margin-top: 0;
+    }
+
+    nav .search {
+        width: 30%;
+    }
+
+    nav .bt {
+        width: 23.33%;
+    }
+
+    .bin {
+        width: 40vw;
+        margin-left: 100vw;
+    }
+
+    .bin-show {
+        margin-left: 60vw;
+    }
 }
