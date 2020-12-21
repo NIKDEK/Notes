@@ -178,6 +178,7 @@ nav .bt label#search:hover {
     align-items: center;
     justify-content: center;
     transition: 1s;
+    overflow: visible;
 }
 
 .btds {
@@ -185,6 +186,7 @@ nav .bt label#search:hover {
     height: 5px;
     background: white;
     border-radius: 5px;
+    
 }
 
 .btds.b {
