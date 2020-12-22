@@ -44,6 +44,22 @@ function enable_note_editor(action) {
 
 function create_note(title = '', content = '') {
 
+    /*
+    div class="note">
+                <div class="title-nt">
+                    <label for="">TEXT</label>
+                </div>
+                <div class="cnt">
+                    <p>
+                        TEXT
+                    </p>
+                </div>
+                <div class="opcs">
+                    <label class="update">Update</label><label class="del">Delete</label>
+                </div>
+            </div>
+    */
+
     var tt_val = title,
         txt_val = content;
 
