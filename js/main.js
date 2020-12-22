@@ -13,8 +13,6 @@ var temp = {
     'content': []
 };
 
-var tmp = []
-
 function enable_note_editor(action) {
     function enable() {
         note_add_bt.className = 'add hide-bt';
@@ -104,9 +102,9 @@ function create_note(title = '', content = '') {
 
                 /*var note_cnt = document.getElementById('note-container'),
                     check = confirm('This action cannot be undone ');*/
-                tmp.push(template)
                 note_cnt.removeChild(template);
-
+                bin(template);
+                enable_note_editor();
                 /*if (check) {
 
                 }*/
@@ -137,6 +135,74 @@ note_add_bt.addEventListener('click', function () {
 note_add.addEventListener('click', function () {
     create_note();
 });
+
+function bin(tmp) {
+    var bin_nt = document.getElementById('bin-notes');
+    if (tmp) {
+        //  for (let x = 0; x < tmp.length; x++) {
+        var bin_note = document.createElement('div'),
+            bin_tt = document.createElement('div'),
+            bin_cnt = document.createElement('div');
+        /*
+           <div class="bin-note">
+                <div class="title">
+                    <label for="">
+                        Lorem.
+                    </label>
+                </div>
+                <div class="cnt-prev">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, provident!....
+                    </p>
+                </div>
+                <div class="bts">
+                    <label for="" class="safe-lb">
+                        < </label> <label for="" class="danger-lb"> X
+                    </label>
+                </div>
+            </div>*/
+
+        bin_note.className = "bin-note";
+        bin_tt.className = "title";
+        bin_cnt.className = "cnt-prev"
+
+        bin_tt.innerHTML = `<label>${tmp.children[0].firstElementChild.innerText}</label>`
+        bin_cnt.innerHTML = `<p>${tmp.children[1].firstElementChild.innerText.slice(0,25)+'...'}</p>`;
+
+        bin_note.appendChild(bin_tt);
+        bin_note.appendChild(bin_cnt);
+
+        var id = document.getElementsByClassName('bin-note').length;
+
+        bin_note.innerHTML += `<div class="bts"><label class="safe-lb" onclick="bin_rest(${id},'${tmp.children[0].firstElementChild.innerText}', '${tmp.children[1].firstElementChild.innerText}')"><</label><label class="danger-lb" onclick="bin_del(${id},false)">x</label></div>`
+
+        bin_nt.appendChild(bin_note);
+        //};
+    };
+};
+
+
+function bin_del(id, del) {
+    var chk = del;
+
+    function delbin() {
+        bin_nt = document.getElementById('bin-notes');
+        bin_nt.removeChild(document.getElementsByClassName("bin-note")[id]);
+    };
+    if (chk == false) {
+        var chk = confirm('Sure?, this action cannot be undone.');
+        if (chk) {
+            delbin();
+        }
+    } else {
+        delbin();
+    }
+}
+
+function bin_rest(id, tt, txt) {
+    bin_del(id, true);
+    create_note(tt, txt);
+}
 
 function bin_enable(func) {
     if (func == 'open') {
