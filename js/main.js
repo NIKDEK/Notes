@@ -5,22 +5,60 @@ var notecreate = document.getElementById('notecreate'),
     bin_bt = document.getElementById('bin'),
     bin_ct = document.getElementById('bin-ct'),
     bin_xt = document.getElementById('bin-exit'),
+    search_bar = document.getElementById('search_bar'),
+    search_bt = document.getElementById('search'),
     updid;
 
 
-var temp = {
-    'title': [],
-    'content': []
+function reset_view() {
+    var temps = document.getElementsByClassName('note');
+    for (let x = 0; x < temps.length; x++) {
+        var cnt = document.getElementsByClassName('note')[x];
+        cnt.style = 'display: inline;'
+    }
+}
+
+function search(arg) {
+    var temps = document.getElementsByClassName('note');
+    if (arg != '') {
+        for (let x = 0; x < temps.length; x++) {
+            var cnt = document.getElementsByClassName('note')[x],
+                tt = cnt.children[0].innerText.includes(arg),
+                txt = cnt.children[1].innerText.includes(arg);
+            cnt.style = 'display: inline;'
+            if (tt == false && txt == false) {
+                cnt.style = 'display: none;'
+            }
+        }
+    } else {
+        reset_view()
+    }
 };
 
+search_bt.addEventListener('click', function () {
+    var search_inf = document.getElementById('search_bar').value;
+    search(search_inf);
+})
+
+search_bar.addEventListener('keyup', function () {
+    search(this.value);
+});
+
+search_bar.addEventListener('click', function () {
+    search(this.value);
+});
+
 function enable_note_editor(action) {
+
+    reset_view()
+
     function enable() {
         note_add_bt.className = 'add hide-bt';
         notecreate.className = "notecreate notecreate-show";
         if (note_add.innerText == 'Save') {
             document.getElementById('notetitle').value = updid.childNodes[0].firstElementChild.innerText;
             document.getElementById('notetext').value = updid.childNodes[1].firstElementChild.innerText;
-        }
+        };
     };
 
     function disable() {
@@ -43,6 +81,7 @@ function enable_note_editor(action) {
 
 
 function create_note(title = '', content = '') {
+    reset_view()
 
     /*
     div class="note">
@@ -73,6 +112,7 @@ function create_note(title = '', content = '') {
             updid.childNodes[0].firstElementChild.innerText = tt_val;
             updid.childNodes[1].firstElementChild.innerText = txt_val;
             enable_note_editor('update');
+            enable_note_editor();
         } else {
 
             var template = document.createElement('div'),
@@ -190,13 +230,27 @@ function bin(tmp) {
 
         var id = document.getElementsByClassName('bin-note').length;
 
-        bin_note.innerHTML += `<div class="bts"><label class="safe-lb" onclick="bin_rest(${id},'${tmp.children[0].firstElementChild.innerText}', '${tmp.children[1].firstElementChild.innerText}')"><</label><label class="danger-lb" onclick="bin_del(${id},false)">x</label></div>`
+        bin_note.innerHTML += `<div class="bts"><label class="safe-lb" onclick="bin_rest('${tmp.children[0].firstElementChild.innerText}','${bin_cnt.firstChild.innerText}','${tmp.children[1].firstElementChild.innerText}')"><</label><label class="danger-lb" onclick="bin_del(bin_locate('${tmp.children[0].firstElementChild.innerText}', '${bin_cnt.firstChild.innerText}'),false)">x</label></div>`
 
         bin_nt.appendChild(bin_note);
         //};
     };
 };
 
+
+function bin_locate(tt, txt) {
+    var bn = document.getElementsByClassName('bin-note'),
+        id;
+    for (let x = 0; x < bn.length; x++) {
+        var tt_chk = bn[x].children[0].innerText == tt,
+            txt_chk = bn[x].children[1].innerText == txt;
+        if (tt_chk && txt_chk) {
+            id = x;
+            return id;
+            break;
+        };
+    };
+};
 
 function bin_del(id, del) {
     var chk = del;
@@ -215,8 +269,9 @@ function bin_del(id, del) {
     }
 }
 
-function bin_rest(id, tt, txt) {
-    bin_del(id, true);
+function bin_rest(tt, stxt, txt) {
+    //console.log(bin_locate(tt, stxt), true);
+    bin_del(bin_locate(tt, stxt), true)
     create_note(tt, txt);
 }
 
