@@ -18,7 +18,9 @@ function reset_view() {
     }
 }
 
+
 function search(arg) {
+    eel.inf(arg);
     var temps = document.getElementsByClassName('note');
     if (arg != '') {
         for (let x = 0; x < temps.length; x++) {
