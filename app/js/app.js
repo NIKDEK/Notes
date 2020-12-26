@@ -1,26 +1,15 @@
-var notecreate = document.getElementById('notecreate'),
-    note_add = document.getElementById('add'),
-    note_add_bt = document.getElementById('add-bt'),
-    note_cnt = document.getElementById('note-container'),
+eel.expose(create_note);
+eel.expose(bin)
+eel.init();
+
+var note_cnt = document.getElementById('note-container'),
     bin_bt = document.getElementById('bin'),
     bin_ct = document.getElementById('bin-ct'),
     bin_xt = document.getElementById('bin-exit'),
     search_bar = document.getElementById('search_bar'),
-    search_bt = document.getElementById('search'),
-    updid;
-
-
-function reset_view() {
-    var temps = document.getElementsByClassName('note');
-    for (let x = 0; x < temps.length; x++) {
-        var cnt = document.getElementsByClassName('note')[x];
-        cnt.style = 'display: inline;'
-    }
-}
-
+    search_bt = document.getElementById('search');
 
 function search(arg) {
-    eel.inf(arg);
     var temps = document.getElementsByClassName('note');
     if (arg != '') {
         for (let x = 0; x < temps.length; x++) {
@@ -36,19 +25,6 @@ function search(arg) {
         reset_view()
     }
 };
-
-search_bt.addEventListener('click', function () {
-    var search_inf = document.getElementById('search_bar').value;
-    search(search_inf);
-})
-
-search_bar.addEventListener('keyup', function () {
-    search(this.value);
-});
-
-search_bar.addEventListener('click', function () {
-    search(this.value);
-});
 
 function enable_note_editor(action) {
 
@@ -81,10 +57,19 @@ function enable_note_editor(action) {
     };
 };
 
+function add(title = '', content = '') {
+    var tt_val = title,
+        txt_val = content;
 
-function create_note(title = '', content = '') {
+    if (title == '' && content == '') {
+        tt_val = document.getElementById('notetitle').value;
+        txt_val = document.getElementById('notetext').value;
+    }
+    create_note(tt_val, txt_val);
+}
+
+function create_note(tt_val, txt_val, key = '') {
     reset_view()
-
     /*
     div class="note">
                 <div class="title-nt">
@@ -101,22 +86,19 @@ function create_note(title = '', content = '') {
             </div>
     */
 
-    var tt_val = title,
-        txt_val = content;
-
-    if (title == '' && content == '') {
-        tt_val = document.getElementById('notetitle').value;
-        txt_val = document.getElementById('notetext').value;
-    }
-
     if (tt_val != '' && txt_val != '') {
         if (note_add.innerText == 'Save') {
             updid.childNodes[0].firstElementChild.innerText = tt_val;
             updid.childNodes[1].firstElementChild.innerText = txt_val;
             enable_note_editor('update');
+            // eel.db_update(tt_val, txt_val);
             enable_note_editor();
+            console.log(bin_locate(tt_val, txt_val, 'note'),tt_val, txt_val)
+            eel.db_update(bin_locate(tt_val, txt_val, 'note'), tt_val, txt_val);
         } else {
-
+            if (key == '') {
+                eel.db_add(tt_val, txt_val);
+            }
             var template = document.createElement('div'),
                 tt = document.createElement('div'),
                 cnt = document.createElement('div'),
@@ -161,6 +143,7 @@ function create_note(title = '', content = '') {
                 /*var note_cnt = document.getElementById('note-container'),
                     check = confirm('This action cannot be undone ');*/
                 note_cnt.removeChild(template);
+                eel.db_del(template.children[0].firstChild.innerText, template.children[1].firstChild.innerText, 'tmp')
                 bin(template);
                 enable_note_editor();
                 /*if (check) {
@@ -180,19 +163,6 @@ function create_note(title = '', content = '') {
         alert('fields cannot be empty');
     };
 };
-
-
-note_add_bt.addEventListener('click', function () {
-    if (note_add_bt.className == "add hide-bt") {
-        enable_note_editor();
-    } else {
-        enable_note_editor('create');
-    }
-});
-
-note_add.addEventListener('click', function () {
-    create_note();
-});
 
 function bin(tmp) {
     var bin_nt = document.getElementById('bin-notes');
@@ -223,16 +193,31 @@ function bin(tmp) {
         bin_note.className = "bin-note";
         bin_tt.className = "title";
         bin_cnt.className = "cnt-prev"
+        var bn_tt,
+            bn_stxt,
+            bn_txt;
 
-        bin_tt.innerHTML = `<label>${tmp.children[0].firstElementChild.innerText}</label>`
-        bin_cnt.innerHTML = `<p>${tmp.children[1].firstElementChild.innerText.slice(0,25)+'...'}</p>`;
+        try {
+            bn_tt = tmp.children[0].firstElementChild.innerText;
+            bn_stxt = tmp.children[1].firstElementChild.innerText.slice(0, 25) + '...';
+            bn_txt = tmp.children[1].firstElementChild.innerText;
+        } catch (err) {
+            if (err) {
+                bn_tt = tmp[0];
+                bn_stxt = tmp[1].slice(0, 25) + '...';
+                bn_txt = tmp[1]
+            }
+        }
+
+        bin_tt.innerHTML = `<label>${bn_tt}</label>`
+        bin_cnt.innerHTML = `<p>${bn_stxt}</p>`;
 
         bin_note.appendChild(bin_tt);
         bin_note.appendChild(bin_cnt);
 
         var id = document.getElementsByClassName('bin-note').length;
 
-        bin_note.innerHTML += `<div class="bts"><label class="safe-lb" onclick="bin_rest('${tmp.children[0].firstElementChild.innerText}','${bin_cnt.firstChild.innerText}','${tmp.children[1].firstElementChild.innerText}')"><</label><label class="danger-lb" onclick="bin_del(bin_locate('${tmp.children[0].firstElementChild.innerText}', '${bin_cnt.firstChild.innerText}'),false)">x</label></div>`
+        bin_note.innerHTML += `<div class="bts"><label class="safe-lb" onclick="bin_rest('${bn_tt}','${bin_cnt.firstChild.innerText}','${bn_txt}')"><</label><label class="danger-lb" onclick="bin_del(['${bn_tt}','${bin_cnt.firstChild.innerText}','${bn_txt}'],false)">x</label></div>`
 
         bin_nt.appendChild(bin_note);
         //};
@@ -240,8 +225,8 @@ function bin(tmp) {
 };
 
 
-function bin_locate(tt, txt) {
-    var bn = document.getElementsByClassName('bin-note'),
+function bin_locate(tt, txt, clss) {
+    var bn = document.getElementsByClassName(clss),
         id;
     for (let x = 0; x < bn.length; x++) {
         var tt_chk = bn[x].children[0].innerText == tt,
@@ -254,16 +239,27 @@ function bin_locate(tt, txt) {
     };
 };
 
-function bin_del(id, del) {
-    var chk = del;
+function bin_del(prm, del) {
+
+    var chk = del,
+        id;
+
+    if (typeof (prm) != "number") {
+        id = bin_locate(prm[0], prm[1], 'bin-note');
+    } else {
+        id = prm
+    }
 
     function delbin() {
+        var nt = document.getElementsByClassName("bin-note")[id];
         bin_nt = document.getElementById('bin-notes');
-        bin_nt.removeChild(document.getElementsByClassName("bin-note")[id]);
+        bin_nt.removeChild(nt);
+        //eel.db_del(id[2],txt)
     };
     if (chk == false) {
         var chk = confirm('Sure?, this action cannot be undone.');
         if (chk) {
+            eel.del_back(prm[0], prm[2])
             delbin();
         }
     } else {
@@ -272,9 +268,9 @@ function bin_del(id, del) {
 }
 
 function bin_rest(tt, stxt, txt) {
-    //console.log(bin_locate(tt, stxt), true);
-    bin_del(bin_locate(tt, stxt), true)
-    create_note(tt, txt);
+    bin_del(bin_locate(tt, stxt, 'bin-note'), true)
+    add(tt, txt);
+    eel.del_back(tt, txt);
 }
 
 function bin_enable(func) {
@@ -285,6 +281,30 @@ function bin_enable(func) {
     }
 };
 
+search_bt.addEventListener('click', function () {
+    var search_inf = document.getElementById('search_bar').value;
+    search(search_inf);
+})
+
+search_bar.addEventListener('keyup', function () {
+    search(this.value);
+});
+
+search_bar.addEventListener('click', function () {
+    search(this.value);
+});
+
+note_add_bt.addEventListener('click', function () {
+    if (note_add_bt.className == "add hide-bt") {
+        enable_note_editor();
+    } else {
+        enable_note_editor('create');
+    }
+});
+
+note_add.addEventListener('click', function () {
+    add();
+});
 
 bin_bt.addEventListener('click', function () {
     bin_enable('open');
