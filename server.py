@@ -7,7 +7,6 @@ global users
 global session
 global tmp_session 
 
-session = ''
 
 with open(f'./db/UsersDB.json') as users_db:
     users = json.load(users_db)
@@ -27,7 +26,7 @@ def start():
 
 def db_read():
     global session
-    if session == tmp_session['SID'] and session != '':
+    if session == tmp_session['SID']:
         global db_notes
         fl = tmp_session['file']
         with open(f'{fl}') as nt:
