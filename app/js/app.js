@@ -1,5 +1,6 @@
 eel.expose(create_note);
-eel.expose(bin)
+eel.expose(bin);
+eel.expose(home)
 eel.init();
 
 var note_cnt = document.getElementById('note-container'),
@@ -8,6 +9,11 @@ var note_cnt = document.getElementById('note-container'),
     bin_xt = document.getElementById('bin-exit'),
     search_bar = document.getElementById('search_bar'),
     search_bt = document.getElementById('search');
+
+
+function home(){
+    window.location.href = '/index.html'
+}
 
 function search(arg) {
     var temps = document.getElementsByClassName('note');
@@ -143,7 +149,7 @@ function create_note(tt_val, txt_val, key = '') {
                 /*var note_cnt = document.getElementById('note-container'),
                     check = confirm('This action cannot be undone ');*/
                 note_cnt.removeChild(template);
-                eel.db_del(template.children[0].firstChild.innerText, template.children[1].firstChild.innerText, 'tmp')
+                eel.db_del(template.children[0].firstChild.innerText, template.children[1].firstChild.innerText)
                 bin(template);
                 enable_note_editor();
                 /*if (check) {

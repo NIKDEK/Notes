@@ -4,59 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Notes</title>
+    <link rel="stylesheet" href="css/main.css">
+    <title>Document</title>
 </head>
 
 <body>
     <div class="container">
-        <nav>
-            <div class="ct">
-                <div class="bt"></div>
-                <div class="search">
-                    <input type="search" name="" id="search_bar">
-                </div>
-                <div class="bt">
-                    <label id="search">
-                        Search
-                    </label>
-                </div>
-                <div class="bt"><label id="bin">
-                        Bin Icon
-                    </label></div>
-            </div>
-        </nav>
-        <div class="cntNT" id="note-container">
+        <div class="tt">
+            <label>
+                Login
+            </label>
         </div>
-        <div class="notecreate" id="notecreate">
-            <div class="tt">
-                <input type="search" id="notetitle" placeholder="Title">
+        <div class="form">
+            <div class="lb">
+                <label>User Name</label>
             </div>
-            <div class="txt">
-                <textarea id="notetext" cols="30" rows="10"></textarea>
+            <div class="user">
+                <input type="text" name="" id="User" placeholder="User Name">
             </div>
-            <div class="bts">
-                <label id="add">
-                    Create
-                </label>
+            <div class="lb">
+                <label>Password</label>
             </div>
-        </div>
-        <div class="bin" id="bin-ct">
-            <div class="bt-close">
-                <label class="danger-lb" id="bin-exit">x</label>
+            <div class="pass">
+                <input type="password" name="" id="Pass" placeholder="Password">
             </div>
-            <div class="bin-cnt" id="bin-notes">
-            </div>
-        </div>
-        <div class="add" id="add-bt">
-            <div class="bt">
-                <div class="btds"></div>
-                <div class="btds b"></div>
+            <div class="opcs">
+                <label id="login_bt">Login</label>
+                <label>Create account</label>
             </div>
         </div>
     </div>
 </body>
 <script src="/eel.js"></script>
-<script src="js/main.js"></script>
-<script src="js/app.js"></script>
+<script src="js/login.js"></script>
 </html>
