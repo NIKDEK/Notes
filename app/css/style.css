@@ -51,6 +51,11 @@ nav .bt {
     align-items: center;
 }
 
+nav .bt #log_out_bt {
+    color: white;
+    cursor: pointer;
+}
+
 nav .search {
     width: 70%;
 }
@@ -186,7 +191,7 @@ nav .bt label#search:hover {
     height: 5px;
     background: white;
     border-radius: 5px;
-    
+
 }
 
 .btds.b {
@@ -324,7 +329,7 @@ nav .bt label#search:hover {
     border-radius: 5px;
 }
 
-@media (min-width: 300px) and (max-width: 500px){
+@media (min-width: 300px) and (max-width: 500px) {
     .notecreate {
         width: 100vw;
         height: 100vh;

@@ -88,3 +88,7 @@ body {
     border-radius: 5px;
     border: none;
 }
+
+.opcs.sup label{
+    margin-right: 5px;
+}

@@ -1,6 +1,8 @@
+eel.session_chk(document.cookie, 'main');
 eel.expose(create_note);
 eel.expose(bin);
-eel.expose(home)
+eel.expose(home);
+eel.expose(redir);
 eel.init();
 
 var note_cnt = document.getElementById('note-container'),
@@ -8,10 +10,14 @@ var note_cnt = document.getElementById('note-container'),
     bin_ct = document.getElementById('bin-ct'),
     bin_xt = document.getElementById('bin-exit'),
     search_bar = document.getElementById('search_bar'),
-    search_bt = document.getElementById('search');
+    search_bt = document.getElementById('search'),
+    log_out_bt = document.getElementById('log_out_bt');
 
+function redir() {
+    window.location.href = '/index.html'
+}
 
-function home(){
+function home() {
     window.location.href = '/index.html'
 }
 
@@ -99,7 +105,7 @@ function create_note(tt_val, txt_val, key = '') {
             enable_note_editor('update');
             // eel.db_update(tt_val, txt_val);
             enable_note_editor();
-            console.log(bin_locate(tt_val, txt_val, 'note'),tt_val, txt_val)
+            console.log(bin_locate(tt_val, txt_val, 'note'), tt_val, txt_val)
             eel.db_update(bin_locate(tt_val, txt_val, 'note'), tt_val, txt_val);
         } else {
             if (key == '') {
@@ -318,4 +324,12 @@ bin_bt.addEventListener('click', function () {
 
 bin_xt.addEventListener('click', function () {
     bin_enable();
+});
+
+log_out_bt.addEventListener('click', function () {
+    var lout = confirm('Log Out?')
+    if (lout) {
+        eel.log_out();
+        window.location.href = '/index.html';
+    }
 });
